@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { USER_API_END_POINT } from '../utils/Constant';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../redux/userSlice';
+import toast from 'react-hot-toast';
 
 function Login() {
     const {user}  = useSelector(state => state.user)
@@ -27,11 +28,11 @@ function Login() {
                 })
                 dispatch(setUser(res?.data?.user))
                 if(res.data.success){
-                    navigate("/home")
+                    navigate("/")
                 } 
-                console.log(res.data.message)
+                toast.success(res.data.message);
             } catch (error) {
-                console.log("Login error: ", error);
+                toast.error(error.response.data.message);
             }
         }else{
             try {
@@ -41,12 +42,12 @@ function Login() {
                     },
                     withCredentials:true
                 });
-                if(res.data.success){
+                if(res.data.status){
                     setIsLogin(true)
                 }
-                console.log(res.data.message)
+                toast.success(res.data.message);
             } catch (error) {
-                console.log("Register error: ", error);
+               toast.error(error.response.data.message);
             }
         }
     }
@@ -54,8 +55,10 @@ function Login() {
         setIsLogin(!isLogin);
         console.log(user);
     }
+
+
   return (
-    <div className='w-full h-screen bg-[#0F172A] pt-28'>
+    <div className='w-full h-screen pt-28 text-black'>
         <div className='w-[30%] min-h-[60%] max-h-[100%] bg-[#ffffffd8] mx-auto rounded-lg px-12 py-8'>
             <h1 className='text-2xl font-bold'>
                 {isLogin?"LOGIN":"REGISTER"}
@@ -77,7 +80,7 @@ function Login() {
                 }
                 <p className='mt-4 text-lg'>Password</p>
                 <input type="username" value={password} onChange={(e)=>setPassword(e.target.value)} className=' w-full p-2 mt-1 bg-transparent outline-none border-2 border-gray-400 rounded-lg'/>
-                <button type="submit" className='w-full mt-10 py-2.5 bg-[#EE5784] rounded-lg'>{isLogin?"LOGIN":"REGISTER"}</button>
+                <button type="submit" className="w-full mt-10 py-2.5 bg-[#db255b]  rounded-lg">{isLogin?"LOGIN":"REGISTER"}</button>
                 <p className='mt-4'>{isLogin?"Don't have an account?":"Already have an account?"} <span onClick={loginHandler} className='cursor-pointer text-blue-500'>{isLogin?"Register":"Login"}</span></p>
             </form>
         </div>
