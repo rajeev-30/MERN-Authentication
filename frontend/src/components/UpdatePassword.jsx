@@ -8,9 +8,11 @@ import { useSelector } from 'react-redux';
 function UpdatePassword() {
     const {user} = useSelector(store=>store.user)
     const [newPassword, setNewPassword] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate();
 
     const updatePassHandler = async() =>{
+        setIsLoading(true)
         try {
             const res = await axios.put(`${USER_API_END_POINT}/updatepassword`,{newPassword},
             {withCredentials: true})
@@ -19,6 +21,8 @@ function UpdatePassword() {
         } catch (error) {
             console.log("Update password failed: ", error);
             toast.error(error.response.data.message)
+        } finally{
+            setIsLoading(false)
         }
     }
   return (
@@ -31,7 +35,7 @@ function UpdatePassword() {
                 value={newPassword}
                 onChange={(e)=>setNewPassword(e.target.value)}
                 />
-            <button className='bg-[#db255b] text-white p-3 px-6 rounded-lg w-fit' onClick={updatePassHandler}>update</button>
+            <button className='bg-[#db255b] text-white p-3 px-6 rounded-lg w-fit' onClick={updatePassHandler}>{isLoading?"Loading...":"Update"}</button>
         </div>
     </div>
   )

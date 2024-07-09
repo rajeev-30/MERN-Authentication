@@ -13,10 +13,12 @@ function Login() {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     
     const submitHandler = async (e) =>{
+        setIsLoading(true);
         e.preventDefault();
         if(isLogin){
             try {
@@ -33,6 +35,8 @@ function Login() {
                 toast.success(res.data.message);
             } catch (error) {
                 toast.error(error.response.data.message);
+            } finally {
+                setIsLoading(false);
             }
         }else{
             try {
@@ -48,6 +52,8 @@ function Login() {
                 toast.success(res.data.message);
             } catch (error) {
                toast.error(error.response.data.message);
+            } finally {
+                setIsLoading(false);
             }
         }
     }
@@ -80,7 +86,7 @@ function Login() {
                 }
                 <p className='mt-4 text-lg'>Password</p>
                 <input type="username" value={password} onChange={(e)=>setPassword(e.target.value)} className=' w-full p-2 mt-1 bg-transparent outline-none border-2 border-gray-400 rounded-lg'/>
-                <button type="submit" className="w-full mt-10 py-2.5 bg-[#db255b]  rounded-lg">{isLogin?"LOGIN":"REGISTER"}</button>
+                <button type="submit" className="w-full mt-10 py-2.5 bg-[#db255b]  rounded-lg">{isLoading?"Loading...":(isLogin?"LOGIN":"REGISTER")}</button>
                 <p className='mt-4'>{isLogin?"Don't have an account?":"Already have an account?"} <span onClick={loginHandler} className='cursor-pointer text-blue-500'>{isLogin?"Register":"Login"}</span></p>
             </form>
         </div>
