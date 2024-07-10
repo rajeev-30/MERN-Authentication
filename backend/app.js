@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(cookieParser())
 
 //Cors policy
-const allowedOrigins = ["http://localhost:5173", "http://localhost:3000"];
+const allowedOrigins = ["http://localhost:5173", "https://mern-authentication-wki0.onrender.com"];
 const corsOptions = {
     origin: (origin, callback) => {
       // Allow requests with no origin (like mobile apps, curl requests)
