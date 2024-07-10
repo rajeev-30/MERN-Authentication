@@ -13,10 +13,21 @@ app.use(express.json())
 app.use(cookieParser())
 
 //Cors policy
-app.use(cors({
-    origin: "http://localhost:5173",
-    credentials:true
-}))
+const allowedOrigins = ["http://localhost:5173", "http://localhost:3000"];
+const corsOptions = {
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps, curl requests)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true // Allow credentials
+  };
+  
+  app.use(cors(corsOptions));
 
 //api
 app.use("/api/v1/user", userRoute);
