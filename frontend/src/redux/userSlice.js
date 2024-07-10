@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     user:null,
     allUsers:[],
-    profile:null
+    profile:null,
 }
 
 const userSlice = createSlice({
@@ -18,10 +18,11 @@ const userSlice = createSlice({
         },
         getProfile: (state, action)=>{
             state.profile = action.payload
-        }
+        },
+       
     }
 });
 
-export const {setUser, getAllUsers, getProfile} = userSlice.actions
+export const {setUser, getAllUsers, getProfile, getRefresh} = userSlice.actions
 
 export default userSlice.reducer

@@ -62,7 +62,9 @@ function Login() {
         console.log(user);
     }
 
-
+    // useEffect(()=>{
+    //     if(user) navigate("/")
+    // },[user])
   return (
     <div className='w-full h-screen pt-28 text-black'>
         <div className='w-[30%] min-h-[60%] max-h-[100%] bg-[#ffffffd8] mx-auto rounded-lg px-12 py-8'>

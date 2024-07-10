@@ -14,7 +14,7 @@ export const isAuthorized = (req, res, next) => {
         req.user = decode.userId;
         next();
     } catch (error) {
-        res.status(401).cookie("token","").json({
+        res.status(401).cookie("token","", {expiresIn: new Date(Date.now())}).json({
             message:"Token has been expired",
         })
     }
